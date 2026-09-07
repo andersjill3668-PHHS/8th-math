@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>8th Grade Math – Exponents Practice Quiz</title>
+<style>
+  :root{
+    --bg:#f4f7fb; --card:#ffffff; --ink:#172033; --muted:#64748b;
+    --accent:#3157c8; --accent2:#e9efff; --good:#177245; --goodbg:#e9f8f0;
+    --bad:#b42318; --badbg:#fff0ee; --line:#dbe2ea; --shadow:0 10px 30px rgba(28,42,70,.09);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink)}
+  .wrap{max-width:900px;margin:0 auto;padding:28px 18px 60px}
+  header{background:linear-gradient(135deg,#1f3f9d,#4d6ee0);color:#fff;border-radius:22px;padding:28px;box-shadow:var(--shadow)}
+  header h1{margin:0 0 8px;font-size:clamp(1.6rem,4vw,2.35rem)}
+  header p{margin:0;line-height:1.55;opacity:.95}
+  .rules{margin-top:18px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  .rule{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);padding:10px 12px;border-radius:12px;font-size:.92rem}
+  .status{position:sticky;top:0;z-index:5;margin:16px 0;background:rgba(244,247,251,.92);backdrop-filter:blur(10px);padding:10px 0}
+  .statusbox{background:var(--card);border:1px solid var(--line);border-radius:15px;padding:12px 16px;box-shadow:0 5px 18px rgba(28,42,70,.06);display:flex;gap:16px;align-items:center;justify-content:space-between}
+  .bar{height:9px;background:#e8edf5;border-radius:999px;overflow:hidden;flex:1}
+  .bar > div{height:100%;width:0;background:var(--accent);transition:width .25s ease}
+  .question{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;margin:14px 0;box-shadow:0 6px 20px rgba(28,42,70,.05)}
+  .qnum{font-size:.82rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+  .prompt{font-size:1.12rem;font-weight:700;line-height:1.45;margin-bottom:16px}
+  .math{font-family:"Cambria Math","Times New Roman",serif;font-size:1.18em}
+  .choices{display:grid;gap:10px}
+  button.choice{width:100%;text-align:left;padding:13px 14px;border:1px solid var(--line);background:#fff;border-radius:12px;font-size:1rem;color:var(--ink);cursor:pointer;transition:.15s ease}
+  button.choice:hover:not(:disabled){border-color:#8ca2ea;background:#f7f9ff;transform:translateY(-1px)}
+  button.choice:disabled{cursor:default}
+  button.choice.correct{border-color:#49a378;background:var(--goodbg);color:#125c39;font-weight:700}
+  button.choice.wrong{border-color:#e38b83;background:var(--badbg);color:#8f1f16;font-weight:700}
+  .feedback{display:none;margin-top:13px;padding:12px 14px;border-radius:12px;line-height:1.45;font-size:.95rem}
+  .feedback.show{display:block}
+  .feedback.good{background:var(--goodbg);color:#125c39}
+  .feedback.bad{background:var(--badbg);color:#8f1f16}
+  .result{display:none;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:26px;margin-top:22px;box-shadow:var(--shadow);text-align:center}
+  .result.show{display:block}
+  .scorebig{font-size:2.4rem;font-weight:900;color:var(--accent);margin:8px 0}
+  .actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:16px}
+  .primary{border:0;background:var(--accent);color:#fff;padding:12px 18px;border-radius:11px;font-weight:750;cursor:pointer}
+  .secondary{border:1px solid var(--line);background:#fff;color:var(--ink);padding:12px 18px;border-radius:11px;font-weight:750;cursor:pointer}
+  footer{color:var(--muted);text-align:center;margin-top:30px;font-size:.9rem}
+  @media(max-width:700px){.rules{grid-template-columns:1fr}.statusbox{flex-wrap:wrap}.bar{order:3;flex-basis:100%}.question{padding:18px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1>8th Grade Math: Exponents Practice Quiz</h1>
+  <p>30 multiple-choice questions based on the worksheet skills: power rule, product rule, quotient rule, negative exponents, zero exponents, powers of monomials, and mixed practice. Answers should use positive exponents.</p>
+  <div class="rules">
+    <div class="rule"><b>Product:</b> x<sup>a</sup> · x<sup>b</sup> = x<sup>a+b</sup></div>
+    <div class="rule"><b>Quotient:</b> x<sup>a</sup> / x<sup>b</sup> = x<sup>a−b</sup></div>
+    <div class="rule"><b>Power:</b> (x<sup>a</sup>)<sup>b</sup> = x<sup>ab</sup></div>
+    <div class="rule"><b>Negative:</b> x<sup>−a</sup> = 1/x<sup>a</sup></div>
+    <div class="rule"><b>Zero:</b> x<sup>0</sup> = 1</div>
+    <div class="rule"><b>Monomials:</b> raise the coefficient and every factor to the outside power.</div>
+  </div>
+</header>
+
+<div class="status">
+  <div class="statusbox">
+    <b id="progressText">0 of 30 answered</b>
+    <div class="bar"><div id="barFill"></div></div>
+    <b id="scoreText">Score: 0</b>
+  </div>
+</div>
+
+<main id="quiz"></main>
+
+<section class="result" id="result">
+  <h2>Quiz Complete</h2>
+  <div class="scorebig" id="finalScore"></div>
+  <p id="finalMessage"></p>
+  <div class="actions">
+    <button class="primary" onclick="restartQuiz()">Practice Again</button>
+    <button class="secondary" onclick="window.scrollTo({top:0,behavior:'smooth'})">Back to Top</button>
+  </div>
+</section>
+
+<footer>Exponent Rules Practice • Designed for independent 8th grade review</footer>
+</div>
+
+<script>
+const questions = [
+  {q:"Simplify: <span class='math'>(8<sup>2</sup>)<sup>5</sup></span>",
+   a:["8<sup>7</sup>","8<sup>10</sup>","40<sup>2</sup>","8<sup>25</sup>"], c:1,
+   e:"Use the power rule: multiply the exponents. 2 × 5 = 10, so the answer is 8<sup>10</sup>."},
+  {q:"Simplify: <span class='math'>((-15)<sup>6</sup>)<sup>3</sup></span>",
+   a:["(-15)<sup>9</sup>","(-15)<sup>18</sup>","(-45)<sup>6</sup>","15<sup>3</sup>"], c:1,
+   e:"Power of a power means multiply exponents: 6 × 3 = 18."},
+  {q:"Express with positive exponents: <span class='math'>(4<sup>−2</sup>)<sup>2</sup></span>",
+   a:["1 / 4<sup>4</sup>","4<sup>4</sup>","1 / 4<sup>2</sup>","1 / 8<sup>2</sup>"], c:0,
+   e:"Multiply exponents: −2 × 2 = −4. Then rewrite 4<sup>−4</sup> as 1/4<sup>4</sup>."},
+  {q:"Express with positive exponents: <span class='math'>(2<sup>4</sup>)<sup>−2</sup></span>",
+   a:["2<sup>8</sup>","1 / 2<sup>6</sup>","1 / 2<sup>8</sup>","1 / 4<sup>2</sup>"], c:2,
+   e:"4 × (−2) = −8, so 2<sup>−8</sup> = 1/2<sup>8</sup>."},
+  {q:"Simplify: <span class='math'>(10<sup>−3</sup>)<sup>−7</sup></span>",
+   a:["10<sup>−21</sup>","10<sup>21</sup>","10<sup>10</sup>","10<sup>4</sup>"], c:1,
+   e:"Multiply the exponents: (−3)(−7) = 21."},
+  {q:"Express with positive exponents: <span class='math'>(3<sup>3</sup>)<sup>−1</sup></span>",
+   a:["1 / 3<sup>3</sup>","3<sup>2</sup>","1 / 3","3<sup>−2</sup>"], c:0,
+   e:"3 × (−1) = −3, so 3<sup>−3</sup> = 1/3<sup>3</sup>."},
+  {q:"Simplify: <span class='math'>(x<sup>9</sup>)<sup>3</sup></span>",
+   a:["x<sup>12</sup>","x<sup>27</sup>","x<sup>6</sup>","3x<sup>9</sup>"], c:1,
+   e:"Use the power rule: 9 × 3 = 27."},
+  {q:"Simplify: <span class='math'>(a<sup>2</sup>)<sup>7</sup></span>",
+   a:["a<sup>9</sup>","a<sup>14</sup>","a<sup>5</sup>","7a<sup>2</sup>"], c:1,
+   e:"Multiply the exponents: 2 × 7 = 14."},
+  {q:"Express with positive exponents: <span class='math'>(k<sup>4</sup>)<sup>−5</sup></span>",
+   a:["1 / k<sup>20</sup>","k<sup>20</sup>","1 / k<sup>9</sup>","k<sup>−1</sup>"], c:0,
+   e:"4 × (−5) = −20, so k<sup>−20</sup> = 1/k<sup>20</sup>."},
+  {q:"Simplify: <span class='math'>(cd<sup>2</sup>)<sup>4</sup></span>",
+   a:["c<sup>4</sup>d<sup>8</sup>","c<sup>4</sup>d<sup>6</sup>","cd<sup>8</sup>","c<sup>5</sup>d<sup>6</sup>"], c:0,
+   e:"Apply the outside exponent to every factor: c<sup>4</sup> and d<sup>2×4</sup> = d<sup>8</sup>."},
+  {q:"Express with positive exponents: <span class='math'>(m<sup>−2</sup>n<sup>8</sup>)<sup>3</sup></span>",
+   a:["m<sup>6</sup>n<sup>24</sup>","n<sup>24</sup> / m<sup>6</sup>","n<sup>11</sup> / m<sup>5</sup>","m<sup>−6</sup>n<sup>11</sup>"], c:1,
+   e:"Multiply each exponent by 3: m<sup>−6</sup>n<sup>24</sup>. Move m<sup>−6</sup> to the denominator."},
+  {q:"Simplify: <span class='math'>(x<sup>−4</sup>y<sup>−2</sup>)<sup>−7</sup></span>",
+   a:["x<sup>28</sup>y<sup>14</sup>","1 / (x<sup>28</sup>y<sup>14</sup>)","x<sup>11</sup>y<sup>9</sup>","x<sup>−28</sup>y<sup>14</sup>"], c:0,
+   e:"(−4)(−7)=28 and (−2)(−7)=14, so both exponents become positive."},
+  {q:"Simplify: <span class='math'>(3x<sup>7</sup>)<sup>2</sup></span>",
+   a:["6x<sup>14</sup>","9x<sup>9</sup>","9x<sup>14</sup>","3x<sup>14</sup>"], c:2,
+   e:"Square the coefficient and multiply the variable exponent: 3<sup>2</sup>=9 and 7×2=14."},
+  {q:"Simplify: <span class='math'>(5n<sup>4</sup>)<sup>3</sup></span>",
+   a:["15n<sup>12</sup>","125n<sup>12</sup>","125n<sup>7</sup>","25n<sup>12</sup>"], c:1,
+   e:"5<sup>3</sup>=125 and n<sup>4×3</sup>=n<sup>12</sup>."},
+  {q:"Simplify: <span class='math'>(10x<sup>7</sup>)<sup>2</sup></span>",
+   a:["20x<sup>14</sup>","100x<sup>9</sup>","100x<sup>14</sup>","10x<sup>14</sup>"], c:2,
+   e:"10<sup>2</sup>=100 and 7×2=14."},
+  {q:"Express with positive exponents: <span class='math'>(4w<sup>−7</sup>)<sup>4</sup></span>",
+   a:["256 / w<sup>28</sup>","16 / w<sup>11</sup>","256w<sup>28</sup>","16 / w<sup>28</sup>"], c:0,
+   e:"4<sup>4</sup>=256 and (−7)(4)=−28, so w<sup>−28</sup> moves to the denominator."},
+  {q:"Simplify: <span class='math'>(2p<sup>2</sup>q<sup>5</sup>)<sup>6</sup></span>",
+   a:["12p<sup>12</sup>q<sup>30</sup>","64p<sup>8</sup>q<sup>11</sup>","64p<sup>12</sup>q<sup>30</sup>","64p<sup>12</sup>q<sup>11</sup>"], c:2,
+   e:"2<sup>6</sup>=64, 2×6=12, and 5×6=30."},
+  {q:"Simplify: <span class='math'>(−7a<sup>8</sup>b<sup>3</sup>)<sup>2</sup></span>",
+   a:["−49a<sup>16</sup>b<sup>6</sup>","49a<sup>16</sup>b<sup>6</sup>","49a<sup>10</sup>b<sup>5</sup>","14a<sup>16</sup>b<sup>6</sup>"], c:1,
+   e:"A negative number squared is positive. (−7)<sup>2</sup>=49, 8×2=16, and 3×2=6."},
+  {q:"Express with positive exponents: <span class='math'>(4c<sup>−9</sup>d<sup>2</sup>)<sup>2</sup></span>",
+   a:["16d<sup>4</sup> / c<sup>18</sup>","8d<sup>4</sup> / c<sup>18</sup>","16c<sup>18</sup>d<sup>4</sup>","16d<sup>2</sup> / c<sup>9</sup>"], c:0,
+   e:"4<sup>2</sup>=16, c gets exponent −18, and d gets exponent 4. Move c<sup>−18</sup> to the denominator."},
+  {q:"Express with positive exponents: <span class='math'>(−3m<sup>−2</sup>n<sup>−5</sup>)<sup>3</sup></span>",
+   a:["27 / (m<sup>6</sup>n<sup>15</sup>)","−27 / (m<sup>6</sup>n<sup>15</sup>)","−9 / (m<sup>6</sup>n<sup>15</sup>)","−27m<sup>6</sup>n<sup>15</sup>"], c:1,
+   e:"(−3)<sup>3</sup>=−27. The variable exponents become −6 and −15, so both variables move to the denominator."},
+  {q:"Express with positive exponents: <span class='math'>(5k<sup>6</sup>)<sup>−2</sup></span>",
+   a:["25 / k<sup>12</sup>","1 / (25k<sup>12</sup>)","1 / (10k<sup>8</sup>)","25k<sup>12</sup>"], c:1,
+   e:"A negative outside exponent makes the entire monomial reciprocal: 5<sup>−2</sup>k<sup>−12</sup> = 1/(25k<sup>12</sup>)."},
+  {q:"Express with positive exponents: <span class='math'>(2a<sup>5</sup>b<sup>−2</sup>)<sup>−4</sup></span>",
+   a:["16a<sup>20</sup> / b<sup>8</sup>","b<sup>8</sup> / (16a<sup>20</sup>)","a<sup>20</sup>b<sup>8</sup> / 16","16b<sup>8</sup> / a<sup>20</sup>"], c:1,
+   e:"2<sup>−4</sup>=1/16, a gets exponent −20, and b gets exponent 8. This gives b<sup>8</sup>/(16a<sup>20</sup>)."},
+  {q:"Simplify: <span class='math'>(6w<sup>8</sup>)<sup>2</sup> · 5w<sup>3</sup></span>",
+   a:["180w<sup>19</sup>","30w<sup>19</sup>","180w<sup>13</sup>","36w<sup>19</sup>"], c:0,
+   e:"First, (6w<sup>8</sup>)<sup>2</sup>=36w<sup>16</sup>. Then 36×5=180 and w<sup>16</sup>·w<sup>3</sup>=w<sup>19</sup>."},
+  {q:"Simplify: <span class='math'>(−4a<sup>2</sup>)<sup>3</sup> · 2a<sup>7</sup></span>",
+   a:["−128a<sup>13</sup>","128a<sup>13</sup>","−64a<sup>9</sup>","−8a<sup>13</sup>"], c:0,
+   e:"(−4)<sup>3</sup>=−64 and a<sup>2×3</sup>=a<sup>6</sup>. Multiply by 2a<sup>7</sup>: −128a<sup>13</sup>."},
+  {q:"Simplify: <span class='math'>(5p<sup>4</sup> · 3p<sup>3</sup>)<sup>2</sup></span>",
+   a:["225p<sup>14</sup>","15p<sup>14</sup>","225p<sup>7</sup>","64p<sup>14</sup>"], c:0,
+   e:"Inside the parentheses, 5·3=15 and p<sup>4</sup>·p<sup>3</sup>=p<sup>7</sup>. Then (15p<sup>7</sup>)<sup>2</sup>=225p<sup>14</sup>."},
+  {q:"Express with positive exponents: <span class='math'>(x<sup>−8</sup>y<sup>−2</sup> · x<sup>3</sup>y<sup>9</sup>)<sup>4</sup></span>",
+   a:["y<sup>28</sup> / x<sup>20</sup>","x<sup>20</sup> / y<sup>28</sup>","y<sup>7</sup> / x<sup>5</sup>","x<sup>44</sup>y<sup>44</sup>"], c:0,
+   e:"Combine inside first: x<sup>−8+3</sup>y<sup>−2+9</sup>=x<sup>−5</sup>y<sup>7</sup>. Raise to the 4th power: x<sup>−20</sup>y<sup>28</sup>=y<sup>28</sup>/x<sup>20</sup>."},
+  {q:"Simplify: <span class='math'>56k<sup>28</sup> / (−2k<sup>8</sup>)<sup>3</sup></span>",
+   a:["−7k<sup>4</sup>","7k<sup>4</sup>","−7k<sup>20</sup>","−28k<sup>4</sup>"], c:0,
+   e:"The denominator is (−2)<sup>3</sup>k<sup>24</sup>=−8k<sup>24</sup>. Then 56/(−8)=−7 and k<sup>28−24</sup>=k<sup>4</sup>."},
+  {q:"Express with positive exponents: <span class='math'>(12c<sup>3</sup>d<sup>7</sup>)<sup>2</sup> / (18c<sup>8</sup>d<sup>−10</sup>)</span>",
+   a:["8d<sup>24</sup> / c<sup>2</sup>","8c<sup>2</sup>d<sup>4</sup>","8d<sup>4</sup> / c<sup>2</sup>","6d<sup>24</sup> / c<sup>2</sup>"], c:0,
+   e:"The numerator becomes 144c<sup>6</sup>d<sup>14</sup>. Divide by 18c<sup>8</sup>d<sup>−10</sup>: 144/18=8, c<sup>6−8</sup>=c<sup>−2</sup>, and d<sup>14−(−10)</sup>=d<sup>24</sup>. So 8d<sup>24</sup>/c<sup>2</sup>."},
+  {q:"Simplify: <span class='math'>40m<sup>6</sup>n<sup>21</sup> + (−4m<sup>2</sup>n<sup>7</sup>)<sup>3</sup></span>",
+   a:["104m<sup>6</sup>n<sup>21</sup>","−24m<sup>6</sup>n<sup>21</sup>","24m<sup>6</sup>n<sup>21</sup>","−64m<sup>6</sup>n<sup>21</sup>"], c:1,
+   e:"The power is −64m<sup>6</sup>n<sup>21</sup>. Combine like terms: 40 + (−64) = −24."},
+  {q:"Simplify: <span class='math'>(4a<sup>8</sup>b<sup>2</sup>)<sup>3</sup> − (3a<sup>12</sup>b<sup>3</sup>)<sup>2</sup></span>",
+   a:["55a<sup>24</sup>b<sup>6</sup>","73a<sup>24</sup>b<sup>6</sup>","55a<sup>20</sup>b<sup>5</sup>","a<sup>24</sup>b<sup>6</sup>"], c:0,
+   e:"The first term is 64a<sup>24</sup>b<sup>6</sup>; the second is 9a<sup>24</sup>b<sup>6</sup>. Subtract coefficients: 64−9=55."}
+];
+
+let answered = 0, score = 0;
+
+function renderQuiz(){
+  const quiz = document.getElementById("quiz");
+  quiz.innerHTML = "";
+  questions.forEach((item, i) => {
+    const card = document.createElement("section");
+    card.className = "question";
+    card.innerHTML = `
+      <div class="qnum">Question ${i+1}</div>
+      <div class="prompt">${item.q}</div>
+      <div class="choices" id="choices-${i}">
+        ${item.a.map((opt,j)=>`<button class="choice" onclick="answer(${i},${j},this)">${String.fromCharCode(65+j)}. ${opt}</button>`).join("")}
+      </div>
+      <div class="feedback" id="feedback-${i}"></div>`;
+    quiz.appendChild(card);
+  });
+  updateStatus();
+}
+
+function answer(qi, oi, btn){
+  const item = questions[qi];
+  const box = document.getElementById(`choices-${qi}`);
+  const buttons = [...box.querySelectorAll("button")];
+  if(buttons.some(b => b.disabled)) return;
+
+  answered++;
+  buttons.forEach(b => b.disabled = true);
+  buttons[item.c].classList.add("correct");
+
+  const fb = document.getElementById(`feedback-${qi}`);
+  if(oi === item.c){
+    score++;
+    btn.classList.add("correct");
+    fb.className = "feedback show good";
+    fb.innerHTML = `<b>Nice work.</b> ${item.e}`;
+  }else{
+    btn.classList.add("wrong");
+    fb.className = "feedback show bad";
+    fb.innerHTML = `<b>Not quite.</b> ${item.e}`;
+  }
+  updateStatus();
+  if(answered === questions.length) showResults();
+}
+
+function updateStatus(){
+  document.getElementById("progressText").textContent = `${answered} of ${questions.length} answered`;
+  document.getElementById("scoreText").textContent = `Score: ${score}`;
+  document.getElementById("barFill").style.width = `${(answered/questions.length)*100}%`;
+}
+
+function showResults(){
+  const pct = Math.round(score/questions.length*100);
+  document.getElementById("finalScore").textContent = `${score}/${questions.length} (${pct}%)`;
+  let msg = "Keep practicing the exponent rules, especially any questions marked in red.";
+  if(pct >= 90) msg = "Excellent work — the exponent rules look very strong.";
+  else if(pct >= 80) msg = "Strong job. Review the few missed questions and try again.";
+  else if(pct >= 70) msg = "Good progress. Review negative exponents and powers of monomials, then retry.";
+  document.getElementById("finalMessage").textContent = msg;
+  document.getElementById("result").classList.add("show");
+  setTimeout(()=>document.getElementById("result").scrollIntoView({behavior:"smooth",block:"center"}),250);
+}
+
+function restartQuiz(){
+  answered = 0; score = 0;
+  document.getElementById("result").classList.remove("show");
+  renderQuiz();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+renderQuiz();
+</script>
+</body>
+</html>
