@@ -1,254 +1,448 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>8th Grade Math – Exponents Practice Quiz #2</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Scientific Notation Practice Quiz</title>
 <style>
   :root{
-    --bg:#f4f7fb; --card:#ffffff; --ink:#172033; --muted:#64748b;
-    --accent:#3157c8; --accent2:#e9efff; --good:#177245; --goodbg:#e9f8f0;
-    --bad:#b42318; --badbg:#fff0ee; --line:#dbe2ea; --shadow:0 10px 30px rgba(28,42,70,.09);
+    --bg:#f4f7fb;
+    --card:#ffffff;
+    --text:#1f2937;
+    --muted:#6b7280;
+    --accent:#2563eb;
+    --accent2:#1d4ed8;
+    --good:#15803d;
+    --goodbg:#ecfdf5;
+    --bad:#b91c1c;
+    --badbg:#fef2f2;
+    --border:#dbe3ee;
   }
   *{box-sizing:border-box}
-  body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink)}
-  .wrap{max-width:900px;margin:0 auto;padding:28px 18px 60px}
-  header{background:linear-gradient(135deg,#1f3f9d,#4d6ee0);color:#fff;border-radius:22px;padding:28px;box-shadow:var(--shadow)}
-  header h1{margin:0 0 8px;font-size:clamp(1.6rem,4vw,2.35rem)}
-  header p{margin:0;line-height:1.55;opacity:.95}
-  .rules{margin-top:18px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-  .rule{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);padding:10px 12px;border-radius:12px;font-size:.92rem}
-  .status{position:sticky;top:0;z-index:5;margin:16px 0;background:rgba(244,247,251,.92);backdrop-filter:blur(10px);padding:10px 0}
-  .statusbox{background:var(--card);border:1px solid var(--line);border-radius:15px;padding:12px 16px;box-shadow:0 5px 18px rgba(28,42,70,.06);display:flex;gap:16px;align-items:center;justify-content:space-between}
-  .bar{height:9px;background:#e8edf5;border-radius:999px;overflow:hidden;flex:1}
-  .bar > div{height:100%;width:0;background:var(--accent);transition:width .25s ease}
-  .question{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;margin:14px 0;box-shadow:0 6px 20px rgba(28,42,70,.05)}
-  .qnum{font-size:.82rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
-  .prompt{font-size:1.12rem;font-weight:700;line-height:1.45;margin-bottom:16px}
-  .math{font-family:"Cambria Math","Times New Roman",serif;font-size:1.18em}
-  .choices{display:grid;gap:10px}
-  button.choice{width:100%;text-align:left;padding:13px 14px;border:1px solid var(--line);background:#fff;border-radius:12px;font-size:1rem;color:var(--ink);cursor:pointer;transition:.15s ease}
-  button.choice:hover:not(:disabled){border-color:#8ca2ea;background:#f7f9ff;transform:translateY(-1px)}
+  body{
+    margin:0;
+    font-family:Arial, Helvetica, sans-serif;
+    background:var(--bg);
+    color:var(--text);
+  }
+  .wrap{
+    max-width:820px;
+    margin:0 auto;
+    padding:24px;
+  }
+  .card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:18px;
+    box-shadow:0 8px 24px rgba(15,23,42,.08);
+    padding:28px;
+  }
+  h1{
+    margin:0 0 8px;
+    font-size:2rem;
+  }
+  .subtitle{
+    color:var(--muted);
+    margin-bottom:22px;
+    line-height:1.5;
+  }
+  .progressbar{
+    height:10px;
+    background:#e5e7eb;
+    border-radius:999px;
+    overflow:hidden;
+    margin:12px 0 22px;
+  }
+  .progress{
+    height:100%;
+    width:0%;
+    background:var(--accent);
+    transition:width .25s ease;
+  }
+  .qmeta{
+    display:flex;
+    justify-content:space-between;
+    gap:12px;
+    color:var(--muted);
+    font-size:.95rem;
+    margin-bottom:12px;
+  }
+  .question{
+    font-size:1.35rem;
+    line-height:1.45;
+    font-weight:700;
+    margin-bottom:18px;
+  }
+  .choices{
+    display:grid;
+    gap:12px;
+  }
+  button.choice{
+    width:100%;
+    text-align:left;
+    padding:14px 16px;
+    border:2px solid var(--border);
+    border-radius:12px;
+    background:#fff;
+    color:var(--text);
+    font-size:1rem;
+    cursor:pointer;
+    transition:.15s ease;
+  }
+  button.choice:hover:not(:disabled){
+    border-color:#93c5fd;
+    background:#eff6ff;
+  }
   button.choice:disabled{cursor:default}
-  button.choice.correct{border-color:#49a378;background:var(--goodbg);color:#125c39;font-weight:700}
-  button.choice.wrong{border-color:#e38b83;background:var(--badbg);color:#8f1f16;font-weight:700}
-  .feedback{display:none;margin-top:13px;padding:12px 14px;border-radius:12px;line-height:1.45;font-size:.95rem}
-  .feedback.show{display:block}
-  .feedback.good{background:var(--goodbg);color:#125c39}
-  .feedback.bad{background:var(--badbg);color:#8f1f16}
-  .result{display:none;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:26px;margin-top:22px;box-shadow:var(--shadow);text-align:center}
-  .result.show{display:block}
-  .scorebig{font-size:2.4rem;font-weight:900;color:var(--accent);margin:8px 0}
-  .actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:16px}
-  .primary{border:0;background:var(--accent);color:#fff;padding:12px 18px;border-radius:11px;font-weight:750;cursor:pointer}
-  .secondary{border:1px solid var(--line);background:#fff;color:var(--ink);padding:12px 18px;border-radius:11px;font-weight:750;cursor:pointer}
-  footer{color:var(--muted);text-align:center;margin-top:30px;font-size:.9rem}
-  @media(max-width:700px){.rules{grid-template-columns:1fr}.statusbox{flex-wrap:wrap}.bar{order:3;flex-basis:100%}.question{padding:18px}}
+  button.choice.correct{
+    border-color:var(--good);
+    background:var(--goodbg);
+  }
+  button.choice.incorrect{
+    border-color:var(--bad);
+    background:var(--badbg);
+  }
+  .feedback{
+    margin-top:18px;
+    border-radius:12px;
+    padding:16px;
+    line-height:1.55;
+    display:none;
+  }
+  .feedback.good{
+    display:block;
+    background:var(--goodbg);
+    border:1px solid #86efac;
+  }
+  .feedback.bad{
+    display:block;
+    background:var(--badbg);
+    border:1px solid #fca5a5;
+  }
+  .feedback strong{display:block;margin-bottom:6px}
+  .next-btn,.restart-btn{
+    margin-top:18px;
+    border:0;
+    border-radius:10px;
+    padding:12px 18px;
+    font-size:1rem;
+    font-weight:700;
+    background:var(--accent);
+    color:white;
+    cursor:pointer;
+  }
+  .next-btn:hover,.restart-btn:hover{background:var(--accent2)}
+  .next-btn{display:none}
+  .result-score{
+    font-size:3rem;
+    font-weight:800;
+    margin:10px 0 4px;
+  }
+  .result-message{
+    font-size:1.1rem;
+    margin-bottom:18px;
+  }
+  .review{
+    margin-top:24px;
+    text-align:left;
+  }
+  .review-item{
+    border-top:1px solid var(--border);
+    padding:14px 0;
+    line-height:1.45;
+  }
+  .review-item:first-child{border-top:0}
+  .small{font-size:.92rem;color:var(--muted)}
+  .hidden{display:none}
+  @media (max-width:600px){
+    .wrap{padding:12px}
+    .card{padding:20px}
+    h1{font-size:1.6rem}
+    .question{font-size:1.18rem}
+  }
 </style>
 </head>
 <body>
 <div class="wrap">
-<header>
-  <h1>8th Grade Math: Exponents Practice Quiz #2</h1>
-  <p>30 multiple-choice retake-prep questions covering the same worksheet skills, with special attention to powers of monomials, negative exponents, reciprocals, quotient rule, signs, and multi-step problems. Answers should use positive exponents.</p>
-  <div class="rules">
-    <div class="rule"><b>Product:</b> x<sup>a</sup> · x<sup>b</sup> = x<sup>a+b</sup></div>
-    <div class="rule"><b>Quotient:</b> x<sup>a</sup> / x<sup>b</sup> = x<sup>a−b</sup></div>
-    <div class="rule"><b>Power:</b> (x<sup>a</sup>)<sup>b</sup> = x<sup>ab</sup></div>
-    <div class="rule"><b>Negative:</b> x<sup>−a</sup> = 1/x<sup>a</sup></div>
-    <div class="rule"><b>Zero:</b> x<sup>0</sup> = 1</div>
-    <div class="rule"><b>Monomials:</b> raise the coefficient and every factor to the outside power.</div>
+  <div class="card" id="quizCard">
+    <div id="quizView">
+      <h1>Scientific Notation Practice Quiz</h1>
+      <div class="subtitle">
+        20 questions covering scientific notation, standard notation, coefficients, powers of 10,
+        and positive/negative exponents.
+      </div>
+
+      <div class="qmeta">
+        <span id="questionNumber"></span>
+        <span id="scoreLive">Score: 0</span>
+      </div>
+      <div class="progressbar"><div class="progress" id="progress"></div></div>
+
+      <div class="question" id="question"></div>
+      <div class="choices" id="choices"></div>
+
+      <div class="feedback" id="feedback"></div>
+      <button class="next-btn" id="nextBtn">Next Question</button>
+    </div>
+
+    <div id="resultView" class="hidden">
+      <h1>Quiz Complete</h1>
+      <div class="result-score" id="finalScore"></div>
+      <div class="result-message" id="resultMessage"></div>
+      <button class="restart-btn" id="restartBtn">Try Again</button>
+      <div class="review" id="review"></div>
+    </div>
   </div>
-</header>
-
-<div class="status">
-  <div class="statusbox">
-    <b id="progressText">0 of 30 answered</b>
-    <div class="bar"><div id="barFill"></div></div>
-    <b id="scoreText">Score: 0</b>
-  </div>
-</div>
-
-<main id="quiz"></main>
-
-<section class="result" id="result">
-  <h2>Quiz Complete</h2>
-  <div class="scorebig" id="finalScore"></div>
-  <p id="finalMessage"></p>
-  <div class="actions">
-    <button class="primary" onclick="restartQuiz()">Practice Again</button>
-    <button class="secondary" onclick="window.scrollTo({top:0,behavior:'smooth'})">Back to Top</button>
-  </div>
-</section>
-
-<footer>Exponent Rules Practice • Designed for independent 8th grade review</footer>
 </div>
 
 <script>
 const questions = [
-  {q:"Simplify: <span class='math'>(8<sup>5</sup>)<sup>2</sup></span>",
-   a:["8<sup>7</sup>","8<sup>10</sup>","40<sup>2</sup>","8<sup>25</sup>"], c:1,
-   e:"Use the power rule: multiply the exponents. 5 × 2 = 10, so the answer is 8<sup>10</sup>."},
-  {q:"Simplify: <span class='math'>((-15)<sup>6</sup>)<sup>3</sup></span>",
-   a:["(-15)<sup>9</sup>","(-15)<sup>18</sup>","(-45)<sup>6</sup>","15<sup>3</sup>"], c:1,
-   e:"Power of a power means multiply exponents: 6 × 3 = 18."},
-  {q:"Express with positive exponents: <span class='math'>(4<sup>−2</sup>)<sup>2</sup></span>",
-   a:["1 / 4<sup>4</sup>","4<sup>4</sup>","1 / 4<sup>2</sup>","1 / 8<sup>2</sup>"], c:0,
-   e:"Multiply exponents: −2 × 2 = −4. Then rewrite 4<sup>−4</sup> as 1/4<sup>4</sup>."},
-  {q:"Express with positive exponents: <span class='math'>(2<sup>4</sup>)<sup>−2</sup></span>",
-   a:["2<sup>8</sup>","1 / 2<sup>6</sup>","1 / 2<sup>8</sup>","1 / 4<sup>2</sup>"], c:2,
-   e:"4 × (−2) = −8, so 2<sup>−8</sup> = 1/2<sup>8</sup>."},
-  {q:"Simplify: <span class='math'>(10<sup>−3</sup>)<sup>−7</sup></span>",
-   a:["10<sup>−21</sup>","10<sup>21</sup>","10<sup>10</sup>","10<sup>4</sup>"], c:1,
-   e:"Multiply the exponents: (−3)(−7) = 21."},
-  {q:"Express with positive exponents: <span class='math'>(3<sup>3</sup>)<sup>−1</sup></span>",
-   a:["1 / 3<sup>3</sup>","3<sup>2</sup>","1 / 3","3<sup>−2</sup>"], c:0,
-   e:"3 × (−1) = −3, so 3<sup>−3</sup> = 1/3<sup>3</sup>."},
-  {q:"Simplify: <span class='math'>(x<sup>3</sup>)<sup>9</sup></span>",
-   a:["x<sup>12</sup>","x<sup>27</sup>","x<sup>6</sup>","3x<sup>9</sup>"], c:1,
-   e:"Use the power rule: 3 × 9 = 27."},
-  {q:"Simplify: <span class='math'>(a<sup>7</sup>)<sup>2</sup></span>",
-   a:["a<sup>9</sup>","a<sup>14</sup>","a<sup>5</sup>","7a<sup>2</sup>"], c:1,
-   e:"Multiply the exponents: 7 × 2 = 14."},
-  {q:"Express with positive exponents: <span class='math'>(k<sup>4</sup>)<sup>−5</sup></span>",
-   a:["1 / k<sup>20</sup>","k<sup>20</sup>","1 / k<sup>9</sup>","k<sup>−1</sup>"], c:0,
-   e:"4 × (−5) = −20, so k<sup>−20</sup> = 1/k<sup>20</sup>."},
-  {q:"Simplify: <span class='math'>(c<sup>2</sup>d)<sup>4</sup></span>",
-   a:["c<sup>8</sup>d<sup>4</sup>","c<sup>8</sup>d<sup>6</sup>","c<sup>8</sup>d","c<sup>6</sup>d<sup>5</sup>"], c:0,
-   e:"Apply the outside exponent to every factor: c<sup>2×4</sup> = c<sup>8</sup> and d<sup>4</sup>."},
-  {q:"Express with positive exponents: <span class='math'>(m<sup>−2</sup>n<sup>8</sup>)<sup>3</sup></span>",
-   a:["m<sup>6</sup>n<sup>24</sup>","n<sup>24</sup> / m<sup>6</sup>","n<sup>11</sup> / m<sup>5</sup>","m<sup>−6</sup>n<sup>11</sup>"], c:1,
-   e:"Multiply each exponent by 3: m<sup>−6</sup>n<sup>24</sup>. Move m<sup>−6</sup> to the denominator."},
-  {q:"Simplify: <span class='math'>(x<sup>−4</sup>y<sup>−2</sup>)<sup>−7</sup></span>",
-   a:["x<sup>28</sup>y<sup>14</sup>","1 / (x<sup>28</sup>y<sup>14</sup>)","x<sup>11</sup>y<sup>9</sup>","x<sup>−28</sup>y<sup>14</sup>"], c:0,
-   e:"(−4)(−7)=28 and (−2)(−7)=14, so both exponents become positive."},
-  {q:"Simplify: <span class='math'>(3x<sup>7</sup>)<sup>2</sup></span>",
-   a:["6x<sup>14</sup>","9x<sup>9</sup>","9x<sup>14</sup>","3x<sup>14</sup>"], c:2,
-   e:"Square the coefficient and multiply the variable exponent: 3<sup>2</sup>=9 and 7×2=14."},
-  {q:"Simplify: <span class='math'>(5n<sup>4</sup>)<sup>3</sup></span>",
-   a:["15n<sup>12</sup>","125n<sup>12</sup>","125n<sup>7</sup>","25n<sup>12</sup>"], c:1,
-   e:"5<sup>3</sup>=125 and n<sup>4×3</sup>=n<sup>12</sup>."},
-  {q:"Simplify: <span class='math'>(10x<sup>7</sup>)<sup>2</sup></span>",
-   a:["20x<sup>14</sup>","100x<sup>9</sup>","100x<sup>14</sup>","10x<sup>14</sup>"], c:2,
-   e:"10<sup>2</sup>=100 and 7×2=14."},
-  {q:"Express with positive exponents: <span class='math'>(4w<sup>−7</sup>)<sup>4</sup></span>",
-   a:["256 / w<sup>28</sup>","16 / w<sup>11</sup>","256w<sup>28</sup>","16 / w<sup>28</sup>"], c:0,
-   e:"4<sup>4</sup>=256 and (−7)(4)=−28, so w<sup>−28</sup> moves to the denominator."},
-  {q:"Simplify: <span class='math'>(2p<sup>2</sup>q<sup>5</sup>)<sup>6</sup></span>",
-   a:["12p<sup>12</sup>q<sup>30</sup>","64p<sup>8</sup>q<sup>11</sup>","64p<sup>12</sup>q<sup>30</sup>","64p<sup>12</sup>q<sup>11</sup>"], c:2,
-   e:"2<sup>6</sup>=64, 2×6=12, and 5×6=30."},
-  {q:"Simplify: <span class='math'>(−7a<sup>8</sup>b<sup>3</sup>)<sup>2</sup></span>",
-   a:["−49a<sup>16</sup>b<sup>6</sup>","49a<sup>16</sup>b<sup>6</sup>","49a<sup>10</sup>b<sup>5</sup>","14a<sup>16</sup>b<sup>6</sup>"], c:1,
-   e:"A negative number squared is positive. (−7)<sup>2</sup>=49, 8×2=16, and 3×2=6."},
-  {q:"Express with positive exponents: <span class='math'>(4c<sup>−9</sup>d<sup>2</sup>)<sup>2</sup></span>",
-   a:["16d<sup>4</sup> / c<sup>18</sup>","8d<sup>4</sup> / c<sup>18</sup>","16c<sup>18</sup>d<sup>4</sup>","16d<sup>2</sup> / c<sup>9</sup>"], c:0,
-   e:"4<sup>2</sup>=16, c gets exponent −18, and d gets exponent 4. Move c<sup>−18</sup> to the denominator."},
-  {q:"Express with positive exponents: <span class='math'>(−3m<sup>−2</sup>n<sup>−5</sup>)<sup>3</sup></span>",
-   a:["27 / (m<sup>6</sup>n<sup>15</sup>)","−27 / (m<sup>6</sup>n<sup>15</sup>)","−9 / (m<sup>6</sup>n<sup>15</sup>)","−27m<sup>6</sup>n<sup>15</sup>"], c:1,
-   e:"(−3)<sup>3</sup>=−27. The variable exponents become −6 and −15, so both variables move to the denominator."},
-  {q:"Express with positive exponents: <span class='math'>(5k<sup>6</sup>)<sup>−2</sup></span>",
-   a:["25 / k<sup>12</sup>","1 / (25k<sup>12</sup>)","1 / (10k<sup>8</sup>)","25k<sup>12</sup>"], c:1,
-   e:"A negative outside exponent makes the entire monomial reciprocal: 5<sup>−2</sup>k<sup>−12</sup> = 1/(25k<sup>12</sup>)."},
-  {q:"Express with positive exponents: <span class='math'>(2a<sup>5</sup>b<sup>−2</sup>)<sup>−4</sup></span>",
-   a:["16a<sup>20</sup> / b<sup>8</sup>","b<sup>8</sup> / (16a<sup>20</sup>)","a<sup>20</sup>b<sup>8</sup> / 16","16b<sup>8</sup> / a<sup>20</sup>"], c:1,
-   e:"2<sup>−4</sup>=1/16, a gets exponent −20, and b gets exponent 8. This gives b<sup>8</sup>/(16a<sup>20</sup>)."},
-  {q:"Simplify: <span class='math'>(6w<sup>8</sup>)<sup>2</sup> · 5w<sup>3</sup></span>",
-   a:["180w<sup>19</sup>","30w<sup>19</sup>","180w<sup>13</sup>","36w<sup>19</sup>"], c:0,
-   e:"First, (6w<sup>8</sup>)<sup>2</sup>=36w<sup>16</sup>. Then 36×5=180 and w<sup>16</sup>·w<sup>3</sup>=w<sup>19</sup>."},
-  {q:"Simplify: <span class='math'>(−4a<sup>2</sup>)<sup>3</sup> · 2a<sup>7</sup></span>",
-   a:["−128a<sup>13</sup>","128a<sup>13</sup>","−64a<sup>9</sup>","−8a<sup>13</sup>"], c:0,
-   e:"(−4)<sup>3</sup>=−64 and a<sup>2×3</sup>=a<sup>6</sup>. Multiply by 2a<sup>7</sup>: −128a<sup>13</sup>."},
-  {q:"Simplify: <span class='math'>(5p<sup>4</sup> · 3p<sup>3</sup>)<sup>2</sup></span>",
-   a:["225p<sup>14</sup>","15p<sup>14</sup>","225p<sup>7</sup>","64p<sup>14</sup>"], c:0,
-   e:"Inside the parentheses, 5·3=15 and p<sup>4</sup>·p<sup>3</sup>=p<sup>7</sup>. Then (15p<sup>7</sup>)<sup>2</sup>=225p<sup>14</sup>."},
-  {q:"Express with positive exponents: <span class='math'>(x<sup>−8</sup>y<sup>−2</sup> · x<sup>3</sup>y<sup>9</sup>)<sup>4</sup></span>",
-   a:["y<sup>28</sup> / x<sup>20</sup>","x<sup>20</sup> / y<sup>28</sup>","y<sup>7</sup> / x<sup>5</sup>","x<sup>44</sup>y<sup>44</sup>"], c:0,
-   e:"Combine inside first: x<sup>−8+3</sup>y<sup>−2+9</sup>=x<sup>−5</sup>y<sup>7</sup>. Raise to the 4th power: x<sup>−20</sup>y<sup>28</sup>=y<sup>28</sup>/x<sup>20</sup>."},
-  {q:"Simplify: <span class='math'>56k<sup>28</sup> / (−2k<sup>8</sup>)<sup>3</sup></span>",
-   a:["−7k<sup>4</sup>","7k<sup>4</sup>","−7k<sup>20</sup>","−28k<sup>4</sup>"], c:0,
-   e:"The denominator is (−2)<sup>3</sup>k<sup>24</sup>=−8k<sup>24</sup>. Then 56/(−8)=−7 and k<sup>28−24</sup>=k<sup>4</sup>."},
-  {q:"Express with positive exponents: <span class='math'>(12c<sup>3</sup>d<sup>7</sup>)<sup>2</sup> / (18c<sup>8</sup>d<sup>−10</sup>)</span>",
-   a:["8d<sup>24</sup> / c<sup>2</sup>","8c<sup>2</sup>d<sup>4</sup>","8d<sup>4</sup> / c<sup>2</sup>","6d<sup>24</sup> / c<sup>2</sup>"], c:0,
-   e:"The numerator becomes 144c<sup>6</sup>d<sup>14</sup>. Divide by 18c<sup>8</sup>d<sup>−10</sup>: 144/18=8, c<sup>6−8</sup>=c<sup>−2</sup>, and d<sup>14−(−10)</sup>=d<sup>24</sup>. So 8d<sup>24</sup>/c<sup>2</sup>."},
-  {q:"Simplify: <span class='math'>40m<sup>6</sup>n<sup>21</sup> + (−4m<sup>2</sup>n<sup>7</sup>)<sup>3</sup></span>",
-   a:["104m<sup>6</sup>n<sup>21</sup>","−24m<sup>6</sup>n<sup>21</sup>","24m<sup>6</sup>n<sup>21</sup>","−64m<sup>6</sup>n<sup>21</sup>"], c:1,
-   e:"The power is −64m<sup>6</sup>n<sup>21</sup>. Combine like terms: 40 + (−64) = −24."},
-  {q:"Simplify: <span class='math'>(4a<sup>8</sup>b<sup>2</sup>)<sup>3</sup> − (3a<sup>12</sup>b<sup>3</sup>)<sup>2</sup></span>",
-   a:["55a<sup>24</sup>b<sup>6</sup>","73a<sup>24</sup>b<sup>6</sup>","55a<sup>20</sup>b<sup>5</sup>","a<sup>24</sup>b<sup>6</sup>"], c:0,
-   e:"The first term is 64a<sup>24</sup>b<sup>6</sup>; the second is 9a<sup>24</sup>b<sup>6</sup>. Subtract coefficients: 64−9=55."}
+  {
+    q: "Which number is written correctly in scientific notation?",
+    choices: ["45 × 10³", "4.5 × 10³", "0.45 × 10⁴", "4500 × 10⁰"],
+    answer: 1,
+    explanation: "Scientific notation must have a coefficient that is at least 1 but less than 10. Only 4.5 × 10³ meets that rule."
+  },
+  {
+    q: "What is the coefficient in 7.2 × 10⁵?",
+    choices: ["7.2", "10", "5", "10⁵"],
+    answer: 0,
+    explanation: "The coefficient is the first number in scientific notation. In 7.2 × 10⁵, the coefficient is 7.2."
+  },
+  {
+    q: "Convert 63,000 to scientific notation.",
+    choices: ["6.3 × 10³", "6.3 × 10⁴", "6.3 × 10⁵", "6.3 × 10⁻⁴"],
+    answer: 1,
+    explanation: "Move the decimal 4 places left: 63,000 → 6.3. Since the original number is greater than 1, the exponent is positive: 6.3 × 10⁴."
+  },
+  {
+    q: "Convert 4,580,000 to scientific notation.",
+    choices: ["4.58 × 10⁵", "4.58 × 10⁶", "4.58 × 10⁷", "45.8 × 10⁵"],
+    answer: 1,
+    explanation: "The decimal moves 6 places left to make 4.58, so the correct answer is 4.58 × 10⁶."
+  },
+  {
+    q: "Convert 0.0039 to scientific notation.",
+    choices: ["3.9 × 10³", "3.9 × 10⁻²", "3.9 × 10⁻³", "39 × 10⁻⁴"],
+    answer: 2,
+    explanation: "Move the decimal 3 places right to get 3.9. Because the original number is less than 1, the exponent is negative: 3.9 × 10⁻³."
+  },
+  {
+    q: "Convert 0.000072 to scientific notation.",
+    choices: ["7.2 × 10⁻⁵", "7.2 × 10⁻⁴", "7.2 × 10⁵", "72 × 10⁻⁶"],
+    answer: 0,
+    explanation: "Move the decimal 5 places right to get 7.2. A small number less than 1 uses a negative exponent, so 7.2 × 10⁻⁵."
+  },
+  {
+    q: "Convert 8.1 × 10⁴ to standard notation.",
+    choices: ["810", "8,100", "81,000", "810,000"],
+    answer: 2,
+    explanation: "A positive exponent of 4 means move the decimal 4 places right: 8.1 → 81,000."
+  },
+  {
+    q: "Convert 3.45 × 10⁶ to standard notation.",
+    choices: ["345,000", "3,450,000", "34,500,000", "0.00000345"],
+    answer: 1,
+    explanation: "Move the decimal 6 places right: 3.45 × 10⁶ = 3,450,000."
+  },
+  {
+    q: "Convert 6.2 × 10⁻³ to standard notation.",
+    choices: ["0.0062", "0.062", "0.00062", "6200"],
+    answer: 0,
+    explanation: "A negative exponent means move the decimal left. Three places left from 6.2 gives 0.0062."
+  },
+  {
+    q: "Convert 9.04 × 10⁻⁵ to standard notation.",
+    choices: ["0.0000904", "0.000904", "0.00904", "90,400"],
+    answer: 0,
+    explanation: "Move the decimal 5 places left: 9.04 → 0.0000904."
+  },
+  {
+    q: "A number greater than 1 is converted from standard notation to scientific notation. What sign will the exponent usually have?",
+    choices: ["Positive", "Negative", "No sign", "It must be zero"],
+    answer: 0,
+    explanation: "For numbers greater than 1, the decimal is moved left to form the coefficient, so the exponent is positive."
+  },
+  {
+    q: "A number between 0 and 1 is converted to scientific notation. What sign will the exponent have?",
+    choices: ["Positive", "Negative", "No sign", "It must be zero"],
+    answer: 1,
+    explanation: "Small decimals between 0 and 1 use negative exponents in scientific notation."
+  },
+  {
+    q: "Which coefficient could be used in correct scientific notation?",
+    choices: ["0.8", "8", "18", "80"],
+    answer: 1,
+    explanation: "A scientific notation coefficient must be at least 1 but less than 10. The only valid choice is 8."
+  },
+  {
+    q: "Convert 1,200 to scientific notation.",
+    choices: ["1.2 × 10²", "1.2 × 10³", "12 × 10²", "1.2 × 10⁻³"],
+    answer: 1,
+    explanation: "Move the decimal 3 places left: 1,200 → 1.2, so the answer is 1.2 × 10³."
+  },
+  {
+    q: "Convert 0.0015 to scientific notation.",
+    choices: ["1.5 × 10⁻²", "1.5 × 10⁻³", "1.5 × 10³", "15 × 10⁻⁴"],
+    answer: 1,
+    explanation: "Move the decimal 3 places right to get 1.5. Because the number is less than 1, use a negative exponent: 1.5 × 10⁻³."
+  },
+  {
+    q: "Convert 5.82 × 10⁵ to standard notation.",
+    choices: ["58,200", "582,000", "5,820,000", "0.0000582"],
+    answer: 1,
+    explanation: "Move the decimal 5 places right: 5.82 × 10⁵ = 582,000."
+  },
+  {
+    q: "Convert 2.507 × 10⁻⁴ to standard notation.",
+    choices: ["0.0002507", "0.002507", "0.02507", "25,070"],
+    answer: 0,
+    explanation: "Move the decimal 4 places left: 2.507 → 0.0002507."
+  },
+  {
+    q: "Which expression is NOT written in proper scientific notation?",
+    choices: ["3.4 × 10⁶", "9.99 × 10⁻²", "12.5 × 10³", "1.01 × 10⁵"],
+    answer: 2,
+    explanation: "12.5 is too large to be a scientific notation coefficient. The coefficient must be less than 10."
+  },
+  {
+    q: "Convert 74,300,000 to scientific notation.",
+    choices: ["7.43 × 10⁶", "7.43 × 10⁷", "7.43 × 10⁸", "74.3 × 10⁶"],
+    answer: 1,
+    explanation: "Move the decimal 7 places left to get 7.43, so the answer is 7.43 × 10⁷."
+  },
+  {
+    q: "Convert 6.257 × 10⁻⁷ to standard notation.",
+    choices: ["0.000006257", "0.0000006257", "0.00000006257", "6,257,000"],
+    answer: 1,
+    explanation: "A negative exponent of 7 means move the decimal 7 places left: 6.257 × 10⁻⁷ = 0.0000006257."
+  }
 ];
 
-let answered = 0, score = 0;
+let current = 0;
+let score = 0;
+let answered = false;
+let results = [];
 
-function renderQuiz(){
-  const quiz = document.getElementById("quiz");
-  quiz.innerHTML = "";
-  questions.forEach((item, i) => {
-    const card = document.createElement("section");
-    card.className = "question";
-    card.innerHTML = `
-      <div class="qnum">Question ${i+1}</div>
-      <div class="prompt">${item.q}</div>
-      <div class="choices" id="choices-${i}">
-        ${item.a.map((opt,j)=>`<button class="choice" onclick="answer(${i},${j},this)">${String.fromCharCode(65+j)}. ${opt}</button>`).join("")}
-      </div>
-      <div class="feedback" id="feedback-${i}"></div>`;
-    quiz.appendChild(card);
+const qNum = document.getElementById("questionNumber");
+const scoreLive = document.getElementById("scoreLive");
+const progress = document.getElementById("progress");
+const questionEl = document.getElementById("question");
+const choicesEl = document.getElementById("choices");
+const feedbackEl = document.getElementById("feedback");
+const nextBtn = document.getElementById("nextBtn");
+const quizView = document.getElementById("quizView");
+const resultView = document.getElementById("resultView");
+const finalScore = document.getElementById("finalScore");
+const resultMessage = document.getElementById("resultMessage");
+const reviewEl = document.getElementById("review");
+const restartBtn = document.getElementById("restartBtn");
+
+function renderQuestion(){
+  answered = false;
+  feedbackEl.className = "feedback";
+  feedbackEl.innerHTML = "";
+  nextBtn.style.display = "none";
+
+  const item = questions[current];
+  qNum.textContent = `Question ${current + 1} of ${questions.length}`;
+  scoreLive.textContent = `Score: ${score}`;
+  progress.style.width = `${(current / questions.length) * 100}%`;
+  questionEl.textContent = item.q;
+  choicesEl.innerHTML = "";
+
+  item.choices.forEach((choice, i) => {
+    const btn = document.createElement("button");
+    btn.className = "choice";
+    btn.textContent = choice;
+    btn.onclick = () => selectAnswer(i, btn);
+    choicesEl.appendChild(btn);
   });
-  updateStatus();
 }
 
-function answer(qi, oi, btn){
-  const item = questions[qi];
-  const box = document.getElementById(`choices-${qi}`);
-  const buttons = [...box.querySelectorAll("button")];
-  if(buttons.some(b => b.disabled)) return;
+function selectAnswer(index, btn){
+  if(answered) return;
+  answered = true;
 
-  answered++;
+  const item = questions[current];
+  const buttons = [...document.querySelectorAll(".choice")];
   buttons.forEach(b => b.disabled = true);
-  buttons[item.c].classList.add("correct");
 
-  const fb = document.getElementById(`feedback-${qi}`);
-  if(oi === item.c){
+  const isCorrect = index === item.answer;
+  if(isCorrect){
     score++;
     btn.classList.add("correct");
-    fb.className = "feedback show good";
-    fb.innerHTML = `<b>Nice work.</b> ${item.e}`;
-  }else{
-    btn.classList.add("wrong");
-    fb.className = "feedback show bad";
-    fb.innerHTML = `<b>Not quite.</b> ${item.e}`;
+    feedbackEl.className = "feedback good";
+    feedbackEl.innerHTML = `<strong>Correct!</strong>${item.explanation}`;
+  } else {
+    btn.classList.add("incorrect");
+    buttons[item.answer].classList.add("correct");
+    feedbackEl.className = "feedback bad";
+    feedbackEl.innerHTML = `<strong>Not quite.</strong>The correct answer is <b>${item.choices[item.answer]}</b>.<br>${item.explanation}`;
   }
-  updateStatus();
-  if(answered === questions.length) showResults();
+
+  results.push({
+    question: item.q,
+    selected: item.choices[index],
+    correct: item.choices[item.answer],
+    isCorrect
+  });
+
+  scoreLive.textContent = `Score: ${score}`;
+  nextBtn.style.display = "inline-block";
+  nextBtn.textContent = current === questions.length - 1 ? "See Results" : "Next Question";
 }
 
-function updateStatus(){
-  document.getElementById("progressText").textContent = `${answered} of ${questions.length} answered`;
-  document.getElementById("scoreText").textContent = `Score: ${score}`;
-  document.getElementById("barFill").style.width = `${(answered/questions.length)*100}%`;
-}
+nextBtn.addEventListener("click", () => {
+  if(current < questions.length - 1){
+    current++;
+    renderQuestion();
+  } else {
+    showResults();
+  }
+});
 
 function showResults(){
-  const pct = Math.round(score/questions.length*100);
-  document.getElementById("finalScore").textContent = `${score}/${questions.length} (${pct}%)`;
-  let msg = "Keep practicing the exponent rules, especially any questions marked in red.";
-  if(pct >= 90) msg = "Excellent work — the exponent rules look very strong.";
-  else if(pct >= 80) msg = "Strong job. Review the few missed questions and try again.";
-  else if(pct >= 70) msg = "Good progress. Review negative exponents and powers of monomials, then retry.";
-  document.getElementById("finalMessage").textContent = msg;
-  document.getElementById("result").classList.add("show");
-  setTimeout(()=>document.getElementById("result").scrollIntoView({behavior:"smooth",block:"center"}),250);
+  quizView.classList.add("hidden");
+  resultView.classList.remove("hidden");
+
+  const percent = Math.round((score / questions.length) * 100);
+  finalScore.textContent = `${score} / ${questions.length} (${percent}%)`;
+
+  let msg = "";
+  if(percent >= 90) msg = "Excellent work — you have a strong understanding of scientific notation.";
+  else if(percent >= 80) msg = "Nice job — just a few areas need review.";
+  else if(percent >= 70) msg = "Good progress — review the missed problems and try again.";
+  else msg = "Keep practicing — focus on decimal movement and the sign of the exponent.";
+  resultMessage.textContent = msg;
+
+  progress.style.width = "100%";
+
+  const missed = results.filter(r => !r.isCorrect);
+  if(missed.length === 0){
+    reviewEl.innerHTML = `<div class="review-item"><strong>Perfect score!</strong><div class="small">No missed questions to review.</div></div>`;
+  } else {
+    reviewEl.innerHTML = `<h2>Review Missed Questions</h2>` + missed.map((r, idx) => `
+      <div class="review-item">
+        <strong>${idx + 1}. ${r.question}</strong><br>
+        <span>Your answer: ${r.selected}</span><br>
+        <span>Correct answer: ${r.correct}</span>
+      </div>
+    `).join("");
+  }
 }
 
-function restartQuiz(){
-  answered = 0; score = 0;
-  document.getElementById("result").classList.remove("show");
-  renderQuiz();
-  window.scrollTo({top:0,behavior:"smooth"});
-}
+restartBtn.addEventListener("click", () => {
+  current = 0;
+  score = 0;
+  answered = false;
+  results = [];
+  resultView.classList.add("hidden");
+  quizView.classList.remove("hidden");
+  renderQuestion();
+});
 
-renderQuiz();
+renderQuestion();
 </script>
 </body>
 </html>
